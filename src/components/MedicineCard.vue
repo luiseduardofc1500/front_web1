@@ -7,10 +7,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  quantity: {
-    type: Number,
-    required: true,
-  },
   interval: {
     type: Number,
     required: true,
@@ -65,14 +61,6 @@ const utcTime = computed(() => {
   return props.nextTime.toISOString()
 })
 
-const userFriendlyQuantity = computed(() => {
-  if (props.quantity === 1) {
-    return '1 comprimido'
-  }
-
-  return `${props.quantity} comprimidos`
-})
-
 const userFriendlyInterval = computed(() => {
   if (props.interval === 1) {
     return '1 hora'
@@ -92,7 +80,7 @@ const userFriendlyDuration = computed(() => {
 
 <template>
   <article
-      class="block p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1 cursor-pointer w-72 sm:w-96"
+      class="block p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 cursor-pointer w-72 sm:w-96"
       :class="rootColorClasses"
       @click="toggleOpen"
   >
@@ -112,16 +100,6 @@ const userFriendlyDuration = computed(() => {
     <AnimatedSizeTransition transition="quick-slide">
       <template v-if="isOpen">
         <dl class="text-sm">
-          <div class="flex justify-between items-center mb-2">
-            <dt class="text-xs">
-              Quantidade
-            </dt>
-
-            <dd class="text-sm font-bold">
-              {{ userFriendlyQuantity }}
-            </dd>
-          </div>
-
           <div class="flex justify-between items-center mb-2">
             <dt class="text-xs">
               Intervalo

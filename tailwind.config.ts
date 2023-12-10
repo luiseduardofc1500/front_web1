@@ -7,7 +7,7 @@ export default {
       fontFamily: {
         serif: ['Josefin Slab', 'serif'],
         sans: ['Roboto', 'sans-serif'],
-      }
+      },
     },
   },
   plugins: [],

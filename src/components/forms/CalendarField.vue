@@ -52,7 +52,7 @@
           <div
               v-for="(day, dayIdx) in days"
               :key="day.utcTime"
-              class="py-2"
+              class="py-2 relative"
               :class="dayIdx > 6 && 'border-t border-gray-200'"
           >
             <button
@@ -72,6 +72,16 @@
               <time :datetime="day.utcTime">
                 {{ day.userFriendlyNumber }}
               </time>
+
+              <transition name="fade">
+                <span
+                    v-if="highlightedDays && highlightedLocalDates.has(day.date.toDateString()) && !day.isSelected"
+                    class="absolute flex h-1 w-1 bottom-1.5"
+                >
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-1 w-1 bg-sky-500"></span>
+                </span>
+              </transition>
             </button>
           </div>
         </div>
@@ -81,13 +91,26 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from "vue";
+import {computed, type PropType, ref} from "vue";
 import TextButton from "@/components/TextButton.vue";
 import AnimatedSizeTransition from "../AnimatedSizeTransition.vue";
 
+const props = defineProps({
+  modelValue: {
+    type: Date,
+    required: true,
+  },
+  highlightedDays: {
+    type: Set as PropType<Set<Date>>,
+    required: false,
+  },
+})
+
+const emit = defineEmits(['update:modelValue'])
+
 const calendarTransition = ref('left-slide')
 const selectedMonth = ref(new Date())
-const selectedDate = ref(new Date())
+const selectedDate = ref(props.modelValue)
 
 const userFriendlySelectedMonth = computed(() => {
   return selectedMonth.value.toLocaleDateString([], {
@@ -102,6 +125,7 @@ function changeDate(newDate: Date) {
   }
 
   selectedDate.value = newDate
+  emit('update:modelValue', newDate)
 }
 
 function changeMonth(newMonth: Date) {
@@ -170,5 +194,13 @@ const days = computed(() => {
   }
 
   return days
+})
+
+const highlightedLocalDates = computed(() => {
+  if (!props.highlightedDays) {
+    return new Set<string>()
+  }
+
+  return new Set<string>([...props.highlightedDays].map(date => date.toDateString()))
 })
 </script>
