@@ -15,7 +15,7 @@
 
           <FormField label="Início do Tratamento">
             <TextInput
-              type="date"
+              type="datetime-local"
               placeholder="Insira a data de início do tratamento"
               name="startedAt"
               v-model="startedAt"
