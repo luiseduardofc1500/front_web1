@@ -115,7 +115,7 @@ const medicineEntries = computed<MedicineEntry[]>(() => {
 });
 
 const firstEntry = computed<MedicineEntry | undefined>(() => {
-  if (selectedDate.value.getDate() !== new Date().getDate()) {
+  if (selectedDate.value.toDateString() !== new Date().toDateString()) {
     return undefined;
   }
 
@@ -124,7 +124,7 @@ const firstEntry = computed<MedicineEntry | undefined>(() => {
 
 const listedEntries = computed<MedicineEntry[]>(() => {
   const listedEntries = medicineEntries.value
-      .filter(entry => entry.nextTime.getDate() === selectedDate.value.getDate());
+      .filter(entry => entry.nextTime.toDateString() === selectedDate.value.toDateString());
 
   if (firstEntry.value) {
     listedEntries.unshift(firstEntry.value);
