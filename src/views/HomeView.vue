@@ -71,7 +71,7 @@ import MedicineCard from "@/components/MedicineCard.vue";
 import TextButton from "@/components/TextButton.vue";
 import CalendarField from "@/components/forms/CalendarField.vue";
 import {useMedicineStore} from "@/lib/infrastructure/repository/store/medicine";
-import {computed, inject, onMounted, ref} from "vue";
+import {computed, inject, onBeforeMount, onMounted, ref} from "vue";
 import type {Medicine} from "@/lib/domain/entity/medicine";
 import type {MedicineRepository} from "@/lib/domain/repository/medicine";
 import AnimatedSizeTransition from '@/components/AnimatedSizeTransition.vue'
@@ -143,7 +143,7 @@ const daysWithEntries = computed<Set<Date>>(() => {
   return days;
 });
 
-onMounted(async () => {
+onBeforeMount(async () => {
   const medicines = await repository.listMedicines();
 
   if (medicines) {
