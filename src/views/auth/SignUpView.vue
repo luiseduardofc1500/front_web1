@@ -49,6 +49,7 @@ const signUp = async (event: Event) => {
               name="name"
               autocomplete="name"
               v-model="name"
+              minlength="4"
               required
             />
           </FormField>
@@ -70,6 +71,7 @@ const signUp = async (event: Event) => {
               placeholder="Insira sua senha"
               name="password"
               v-model="password"
+              minlength="8"
               required
             />
           </FormField>

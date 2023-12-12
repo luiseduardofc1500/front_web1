@@ -58,6 +58,7 @@ const signIn = async (event: Event) => {
               placeholder="Insira sua senha"
               name="password"
               v-model="password"
+              minlength="8"
               required
             />
           </FormField>
