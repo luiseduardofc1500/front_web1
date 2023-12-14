@@ -5,13 +5,23 @@
             @click="changeMonth(new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() - 1, 1))"
             :is-round="true"
             :is-outline="true"
-            class="font-mono"
+            class="font-mono hidden lg:block"
+        >
+          &lt;
+        </TextButton>
+
+        <TextButton
+            @click="changeDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() - 1))"
+            :is-round="true"
+            :is-outline="true"
+            class="font-mono block lg:hidden"
         >
           &lt;
         </TextButton>
 
         <AnimatedSizeTransition
           :transition="calendarTransition"
+          class="hidden lg:block"
         >
           <h2
             :key="selectedMonth.getTime()"
@@ -21,17 +31,38 @@
           </h2>
         </AnimatedSizeTransition>
 
+        <AnimatedSizeTransition
+          :transition="calendarTransition"
+          class="block lg:hidden"
+        >
+          <h2
+            :key="selectedDate.getTime()"
+            class="text-sm font-semibold text-gray-900 uppercase tracking-widest"
+          >
+              {{ userFriendlySelectedDate }}
+          </h2>
+        </AnimatedSizeTransition>
+
         <TextButton
             @click="changeMonth(new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() + 1, 1))"
             :is-round="true"
             :is-outline="true"
-            class="font-mono"
+            class="font-mono hidden lg:block"
+        >
+          &gt;
+        </TextButton>
+
+        <TextButton
+            @click="changeDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + 1))"
+            :is-round="true"
+            :is-outline="true"
+            class="font-mono block lg:hidden"
         >
           &gt;
         </TextButton>
     </header>
 
-    <div class="mt-6">
+    <div class="mt-6 hidden lg:block">
       <div class="grid grid-cols-7 text-center text-xs leading-6 text-gray-500 h-8 items-center">
         <div>M</div>
         <div>T</div>
@@ -116,6 +147,14 @@ const userFriendlySelectedMonth = computed(() => {
   return selectedMonth.value.toLocaleDateString([], {
     month: 'long',
     year: 'numeric',
+  })
+})
+
+const userFriendlySelectedDate = computed(() => {
+  return selectedDate.value.toLocaleDateString([], {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
   })
 })
 

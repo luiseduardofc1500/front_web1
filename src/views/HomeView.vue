@@ -1,14 +1,14 @@
 <template>
-  <div class="flex items-center justify-center gap-5 lg:divide-x lg:divide-gray-200">
-    <div class="w-96 hidden lg:block">
+  <div class="flex flex-col lg:flex-row items-center justify-center gap-5 lg:divide-x lg:divide-gray-200 lg:w-auto">
+    <div class="w-full lg:w-96">
       <CalendarField
           v-model="selectedDate"
           :highlighted-days="daysWithEntries"
       />
     </div>
 
-    <div class="lg:pl-5 h-[28rem] flex justify-center flex-col relative">
-      <AnimatedSizeTransition transition="quick-slide" class="mb-6">
+    <div class="lg:pl-5 h-[28rem] flex items-center justify-center flex-col relative">
+      <AnimatedSizeTransition transition="quick-slide" class="mb-6 lg:-ml-4">
         <section v-if="firstEntry">
           <small class="text-gray-500 block uppercase text-xs tracking-widest mb-1">
             Próximo remédio
@@ -29,9 +29,9 @@
       <AnimatedSizeTransition transition="quick-slide" class="max-h-full overflow-hidden">
         <div
             v-if="listedEntries.length > 0"
-            class="overflow-x-hidden relative -ml-2 w-full h-full"
+            class="overflow-x-hidden relative w-full h-full lg:px-auto px-2"
         >
-          <transition-group name="group-quick-slide" tag="ul" class="block space-y-2 overflow-y-scroll px-8 -mx-8 pt-2 -mt-2 h-full relative left-2 pb-6">
+          <transition-group name="group-quick-slide" tag="ul" class="block space-y-2 overflow-y-scroll px-8 -mx-8 pt-2 -mt-2 h-full relative pb-6">
             <li class="block" v-for="entry in listedEntries" :key="entry.nextTime.getTime() + entry.name">
               <MedicineCard
                 :next-time="entry.nextTime"
